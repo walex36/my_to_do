@@ -1,0 +1,23 @@
+name: lib_dependencies
+description: "A new Flutter package project."
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: ^3.9.2
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  
+  # Utils
+  equatable: 2.0.7
+  result_dart: 2.1.1
+
+  # State Manager
+  flutter_bloc: 9.1.1
+
+  # Router Manager && Injection Manager
+  flutter_modular: 6.4.1

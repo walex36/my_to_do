@@ -1,0 +1,1 @@
+enum StateTask { todo, done }

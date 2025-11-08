@@ -1,4 +1,4 @@
-name: lib_core
+name: task
 description: "A new Flutter package project."
 version: 0.0.1
 publish_to: none
@@ -10,13 +10,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  
-  shared_preferences: 2.5.3
-  logger: 2.6.2
-  
+
   lib_dependencies:
-    path: ../lib_dependencies
-  
+    path: ../../package/lib_dependencies
+  lib_core:
+    path: ../../package/lib_core
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
