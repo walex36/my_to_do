@@ -6,7 +6,7 @@ import 'package:task/src/data/models/models.dart';
 import 'package:task/src/domain/enums/enums.dart';
 
 import '../../../mocks/classe_mock.dart';
-import '../../../mocks/model_mock.dart';
+import '../../../mocks/task_mock.dart';
 import '../../../mocks/string_mock.dart';
 
 void main() {

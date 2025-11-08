@@ -1,5 +1,6 @@
 import 'package:lib_core/lib_core.dart';
 import 'package:task/src/data/models/models.dart';
+import 'package:task/src/domain/entities/entities.dart';
 import 'package:task/src/domain/enums/state_task_enum.dart';
 
 TaskModel taskModelMock = TaskModel(
@@ -17,3 +18,5 @@ TaskModel taskModelMock2 = TaskModel(
 );
 
 List<TaskModel> listTaskModelMock = [taskModelMock, taskModelMock2];
+
+List<Task> listTaskMock = listTaskModelMock.map((e) => e.toEntity()).toList();

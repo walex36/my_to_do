@@ -9,7 +9,7 @@ import 'package:task/src/domain/enums/enums.dart';
 import 'package:task/src/domain/errors/task_failure_error.dart';
 
 import '../../../mocks/classe_mock.dart';
-import '../../../mocks/model_mock.dart';
+import '../../../mocks/task_mock.dart';
 
 void main() {
   late TaskRepository taskRepository;
