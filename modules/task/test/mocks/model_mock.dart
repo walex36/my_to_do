@@ -8,3 +8,12 @@ TaskModel taskModelMock = TaskModel(
   state: StateTask.todo,
   createdAt: TaskDateTime.now(),
 );
+
+TaskModel taskModelMock2 = TaskModel(
+  hash: 'hash2',
+  description: 'description2',
+  state: StateTask.done,
+  createdAt: TaskDateTime.now(),
+);
+
+List<TaskModel> listTaskModelMock = [taskModelMock, taskModelMock2];

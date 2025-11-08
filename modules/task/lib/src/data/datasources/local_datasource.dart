@@ -39,17 +39,21 @@ class LocalDatasource extends ILocalDatasource {
         if (task != null) return PaginatedResponse(data: [TaskModel.fromJson(task)], total: 1);
       }
 
-      final List<String> list = await _database.getListString(key: keyListTask);
+      List<TaskModel> tasks = [];
+      final List<String> listHash = await _database.getListString(key: keyListTask);
 
-      if (list.isEmpty) return PaginatedResponse(data: [], total: 0);
+      if (listHash.isEmpty) return PaginatedResponse(data: [], total: 0);
 
       final start = (page - 1) * rowsPerPage;
-      final end = start + rowsPerPage;
-      final listPage = list.sublist(start, end);
+      int end = start + rowsPerPage;
+      end = end > listHash.length ? listHash.length : end;
+      final listHashPage = listHash.sublist(start, end);
 
-      final tasks = listPage.map((e) => TaskModel.fromJson(e)).toList();
-
-      return PaginatedResponse(data: tasks, total: list.length);
+      for (var hash in listHashPage) {
+        final task = await _database.getString(key: hash);
+        if (task != null) tasks.add(TaskModel.fromJson(task));
+      }
+      return PaginatedResponse(data: tasks, total: listHash.length);
     } catch (e, s) {
       _logger.error(message: e.toString(), stackTrace: s);
       throw LocalDatabaseException();
@@ -59,13 +63,13 @@ class LocalDatasource extends ILocalDatasource {
   @override
   Future<void> setTask({required TaskModel task}) async {
     try {
-      print(task.toJson());
       await _database.setString(key: task.hash, value: task.toJson());
       await _database.setStringInList(key: keyListTask, value: task.hash);
       await _database.setStringInList(
         key: keyListTaskState(state: task.state),
         value: task.hash,
       );
+
       return;
     } catch (e, s) {
       _logger.error(message: e.toString(), stackTrace: s);
