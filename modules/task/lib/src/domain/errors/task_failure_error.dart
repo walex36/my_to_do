@@ -9,3 +9,5 @@ class TaskFailureNotCreate extends TaskFailure {}
 class TaskFailureNotUpdate extends TaskFailure {}
 
 class TaskFailureNotDelete extends TaskFailure {}
+
+class TaskFailureUnknown extends TaskFailure {}

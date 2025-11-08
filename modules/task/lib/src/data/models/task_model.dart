@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
+import 'package:lib_core/lib_core.dart';
 import 'package:task/src/domain/entities/task_entity.dart';
 import 'package:task/src/domain/enums/state_task_enum.dart';
 
@@ -14,13 +16,21 @@ class TaskModel extends Task {
     };
   }
 
+  Task toEntity() {
+    return Task(hash: hash, description: description, state: state, createdAt: createdAt);
+  }
+
   factory TaskModel.fromMap(Map<String, dynamic> map) {
     return TaskModel(
       hash: map['hash'] as String,
-      description: map['description'] as String,
-      state: StateTask.values.byName(map['state'] as String),
-      createdAt: DateTime.parse(map['createdAt'] as String),
+      description: map['description'] ?? '',
+      state: StateTask.values.byName(map['state'] ?? 'todo'),
+      createdAt: DateTime.parse(map['createdAt'] ?? TaskDateTime.now().toIso8601String()),
     );
+  }
+
+  factory TaskModel.fromEntity(Task task) {
+    return TaskModel(hash: task.hash, description: task.description, state: task.state, createdAt: task.createdAt);
   }
 
   String toJson() => json.encode(toMap());

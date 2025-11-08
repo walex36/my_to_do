@@ -11,19 +11,19 @@ class LocalDatasource extends ILocalDatasource {
     : _database = database,
       _logger = logger;
 
-  final _keyListTask = 'list_task';
-  String _keyListTaskState({required StateTask state}) => 'list_task_state_${state.name}';
+  final keyListTask = 'list_task';
+  String keyListTaskState({required StateTask state}) => 'list_task_state_${state.name}';
 
   @override
   Future<void> deleteTask({required String hash}) async {
     try {
       for (var state in StateTask.values) {
         await _database.removeStringInList(
-          key: _keyListTaskState(state: state),
+          key: keyListTaskState(state: state),
           value: hash,
         );
       }
-      await _database.removeStringInList(key: _keyListTask, value: hash);
+      await _database.removeStringInList(key: keyListTask, value: hash);
       return await _database.remove(key: hash);
     } catch (e, s) {
       _logger.error(message: e.toString(), stackTrace: s);
@@ -39,7 +39,7 @@ class LocalDatasource extends ILocalDatasource {
         if (task != null) return PaginatedResponse(data: [TaskModel.fromJson(task)], total: 1);
       }
 
-      final List<String> list = await _database.getListString(key: _keyListTask);
+      final List<String> list = await _database.getListString(key: keyListTask);
 
       if (list.isEmpty) return PaginatedResponse(data: [], total: 0);
 
@@ -59,12 +59,14 @@ class LocalDatasource extends ILocalDatasource {
   @override
   Future<void> setTask({required TaskModel task}) async {
     try {
+      print(task.toJson());
+      await _database.setString(key: task.hash, value: task.toJson());
+      await _database.setStringInList(key: keyListTask, value: task.hash);
       await _database.setStringInList(
-        key: _keyListTaskState(state: task.state),
+        key: keyListTaskState(state: task.state),
         value: task.hash,
       );
-      await _database.setStringInList(key: _keyListTask, value: task.hash);
-      return await _database.setString(key: task.hash, value: task.toJson());
+      return;
     } catch (e, s) {
       _logger.error(message: e.toString(), stackTrace: s);
       throw LocalDatabaseException();
@@ -76,13 +78,13 @@ class LocalDatasource extends ILocalDatasource {
     try {
       for (var currentState in StateTask.values) {
         await _database.removeStringInList(
-          key: _keyListTaskState(state: currentState),
+          key: keyListTaskState(state: currentState),
           value: hash,
         );
       }
 
       return await _database.setStringInList(
-        key: _keyListTaskState(state: state),
+        key: keyListTaskState(state: state),
         value: hash,
       );
     } catch (e, s) {
