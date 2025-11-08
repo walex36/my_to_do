@@ -32,7 +32,12 @@ class LocalDatasource extends ILocalDatasource {
   }
 
   @override
-  Future<PaginatedResponse<TaskModel>> getTasks({String? hash, required int rowsPerPage, required int page}) async {
+  Future<PaginatedResponse<TaskModel>> getTasks({
+    String? hash,
+    StateTask? state,
+    required int rowsPerPage,
+    required int page,
+  }) async {
     try {
       if (hash != null) {
         final task = await _database.getString(key: hash);
@@ -40,11 +45,18 @@ class LocalDatasource extends ILocalDatasource {
       }
 
       List<TaskModel> tasks = [];
-      final List<String> listHash = await _database.getListString(key: keyListTask);
+      List<String> listHash = [];
+
+      if (state != null) {
+        listHash = await _database.getListString(key: keyListTask);
+      } else {
+        listHash = await _database.getListString(key: keyListTaskState(state: state!));
+      }
 
       if (listHash.isEmpty) return PaginatedResponse(data: [], total: 0);
 
-      final start = (page - 1) * rowsPerPage;
+      final pageCurrent = page <= 0 ? 1 : page;
+      final start = (pageCurrent - 1) * rowsPerPage;
       int end = start + rowsPerPage;
       end = end > listHash.length ? listHash.length : end;
       final listHashPage = listHash.sublist(start, end);

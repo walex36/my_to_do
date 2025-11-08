@@ -1,6 +1,9 @@
 import 'package:lib_core/lib_core.dart';
 
-class TaskFailure extends IFailure {}
+class TaskFailure extends IFailure {
+  @override
+  List<Object?> get props => [];
+}
 
 class TaskFailureNotFound extends TaskFailure {}
 

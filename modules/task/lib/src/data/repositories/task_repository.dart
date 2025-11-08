@@ -50,9 +50,9 @@ class TaskRepository implements ITaskRepository {
   }
 
   @override
-  Future<ResultDart<void, TaskFailure>> deleteTask({required Task task}) async {
+  Future<ResultDart<void, TaskFailure>> deleteTask({required String hash}) async {
     try {
-      await _localDatasource.deleteTask(hash: task.hash);
+      await _localDatasource.deleteTask(hash: hash);
       return Success(true);
     } on LocalDatabaseException {
       return Failure(TaskFailureNotDelete());
@@ -65,11 +65,18 @@ class TaskRepository implements ITaskRepository {
   @override
   Future<ResultDart<PaginatedResponse<Task>, TaskFailure>> getTasks({
     String? hash,
+    StateTask? state,
     required int rowsPerPage,
     required int page,
   }) async {
+    assert(rowsPerPage > 0, 'rowsPerPage must be greater than 0');
     try {
-      final tasksModel = await _localDatasource.getTasks(hash: hash, rowsPerPage: rowsPerPage, page: page);
+      final tasksModel = await _localDatasource.getTasks(
+        hash: hash,
+        state: state,
+        rowsPerPage: rowsPerPage,
+        page: page,
+      );
       final result = PaginatedResponse(
         data: tasksModel.data.map((e) => e.toEntity()).toList(),
         total: tasksModel.total,

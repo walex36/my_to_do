@@ -97,7 +97,7 @@ void main() {
         when(() => localDatasource.deleteTask(hash: any(named: 'hash'))).thenAnswer((_) async {});
 
         /// act
-        final result = await taskRepository.deleteTask(task: taskModelMock);
+        final result = await taskRepository.deleteTask(hash: taskModelMock.hash);
 
         /// assert
         expect(result, Success(true));
@@ -108,7 +108,7 @@ void main() {
         when(() => localDatasource.deleteTask(hash: any(named: 'hash'))).thenThrow(LocalDatabaseException());
 
         /// act
-        final response = await taskRepository.deleteTask(task: taskModelMock);
+        final response = await taskRepository.deleteTask(hash: taskModelMock.hash);
 
         final result = response.fold((l) => null, (r) => r);
 
@@ -123,6 +123,7 @@ void main() {
         when(
           () => localDatasource.getTasks(
             hash: any(named: 'hash'),
+            state: any(named: 'state'),
             rowsPerPage: any(named: 'rowsPerPage'),
             page: any(named: 'page'),
           ),
@@ -143,6 +144,7 @@ void main() {
         when(
           () => localDatasource.getTasks(
             hash: any(named: 'hash'),
+            state: any(named: 'state'),
             rowsPerPage: any(named: 'rowsPerPage'),
             page: any(named: 'page'),
           ),
@@ -162,6 +164,7 @@ void main() {
         when(
           () => localDatasource.getTasks(
             hash: any(named: 'hash'),
+            state: any(named: 'state'),
             rowsPerPage: any(named: 'rowsPerPage'),
             page: any(named: 'page'),
           ),
@@ -175,6 +178,29 @@ void main() {
         expect(result, isA<PaginatedResponse<Task>>());
         expect(result!.data, listTaskModelMock.map((e) => e.toEntity()).toList());
         expect(result.total, listTaskModelMock.length);
+      });
+
+      test('Should failure to get tasks by state', () async {
+        /// arrange
+        final tasksDone = listTaskModelMock.where((element) => element.state == StateTask.done).toList();
+        when(
+          () => localDatasource.getTasks(
+            hash: any(named: 'hash'),
+            state: StateTask.done,
+            rowsPerPage: any(named: 'rowsPerPage'),
+            page: any(named: 'page'),
+          ),
+        ).thenAnswer((_) async => PaginatedResponse(data: tasksDone, total: tasksDone.length));
+
+        /// act
+        final response = await taskRepository.getTasks(hash: null, state: StateTask.done, rowsPerPage: 10, page: 1);
+
+        final result = response.fold((l) => l, (r) => null);
+
+        /// assert
+        expect(result, isA<PaginatedResponse<Task>>());
+        expect(result!.data, tasksDone.map((e) => e.toEntity()).toList());
+        expect(result.total, tasksDone.length);
       });
     });
 
