@@ -1,5 +1,5 @@
 name: lib_dependencies
-description: "A new Flutter package project."
+description: "Package dependencies"
 version: 0.0.1
 publish_to: none
 
@@ -10,7 +10,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  
+  # Localization
+  flutter_localizations:
+    sdk: flutter 
+  intl: any
   
   # Utils
   equatable: 2.0.7
@@ -21,3 +24,8 @@ dependencies:
 
   # Router Manager && Injection Manager
   flutter_modular: 6.4.1
+
+
+flutter:
+  generate: true
+  uses-material-design: true

@@ -10,11 +10,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  task:
+    path: modules/task
   
   lib_core:
     path: package/lib_core
   lib_dependencies:
     path: package/lib_dependencies
+  lib_ds:
+    path: package/lib_ds
 
 dev_dependencies:
   flutter_test:
@@ -24,3 +29,4 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  generate: true

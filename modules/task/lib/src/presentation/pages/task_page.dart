@@ -1,7 +1,10 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:lib_ds/lib_ds.dart';
+import 'package:task/src/presentation/controller/task_controller/task_bloc.dart';
 
 class TaskPage extends StatefulWidget {
-  const TaskPage({super.key});
+  final TaskBloc taskBloc;
+  const TaskPage({super.key, required this.taskBloc});
 
   @override
   State<TaskPage> createState() => _TaskPageState();
@@ -10,6 +13,9 @@ class TaskPage extends StatefulWidget {
 class _TaskPageState extends State<TaskPage> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: TodoAppBar(title: 'Task'),
+      body: Container(),
+    );
   }
 }
