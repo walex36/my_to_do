@@ -9,8 +9,17 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get task_nameTile => 'Task';
+  String get task_nameTitle => 'To-do list';
 
   @override
   String get task_myTaskInitializingLabel => 'Minhas Tarefas initializing';
+
+  @override
+  String get task_allSegmentLabel => 'All';
+
+  @override
+  String get task_pendingSegmentLabel => 'Pending';
+
+  @override
+  String get task_doneSegmentLabel => 'Done';
 }

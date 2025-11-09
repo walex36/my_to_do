@@ -38,7 +38,7 @@ class TaskRepository implements ITaskRepository {
     try {
       final dateTime = TaskDateTime.now();
       final hash = _uuidRepository.generateV5(name: dateTime.millisecondsSinceEpoch.toString());
-      final taskModel = TaskModel(hash: hash, description: description, state: StateTask.todo, createdAt: dateTime);
+      final taskModel = TaskModel(hash: hash, description: description, state: StateTask.pending, createdAt: dateTime);
       await _localDatasource.setTask(task: taskModel);
       return Success(true);
     } on LocalDatabaseException {

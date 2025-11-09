@@ -98,17 +98,35 @@ abstract class AppLocalizations {
     Locale('pt'),
   ];
 
-  /// No description provided for @task_nameTile.
+  /// No description provided for @task_nameTitle.
   ///
   /// In en, this message translates to:
-  /// **'Task'**
-  String get task_nameTile;
+  /// **'To-do list'**
+  String get task_nameTitle;
 
   /// No description provided for @task_myTaskInitializingLabel.
   ///
   /// In en, this message translates to:
   /// **'Minhas Tarefas initializing'**
   String get task_myTaskInitializingLabel;
+
+  /// No description provided for @task_allSegmentLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get task_allSegmentLabel;
+
+  /// No description provided for @task_pendingSegmentLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get task_pendingSegmentLabel;
+
+  /// No description provided for @task_doneSegmentLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get task_doneSegmentLabel;
 }
 
 class _AppLocalizationsDelegate

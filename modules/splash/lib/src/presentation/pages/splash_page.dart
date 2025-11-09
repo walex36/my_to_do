@@ -36,18 +36,18 @@ class _SplashPageState extends State<SplashPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                CircularProgressIndicator(color: theme.colorScheme.surface),
+                CircularProgressIndicator(color: theme.colorScheme.onSurface),
                 const SizedBox(height: 16),
                 Text(
                   localizations.task_myTaskInitializingLabel,
-                  style: theme.textTheme.headlineMedium?.copyWith(color: theme.colorScheme.surface),
+                  style: theme.textTheme.headlineMedium?.copyWith(color: theme.colorScheme.onSurface),
                 ),
               ],
             ),
           );
         },
       ),
-      backgroundColor: theme.colorScheme.primary,
+      backgroundColor: theme.colorScheme.surface,
     );
   }
 }

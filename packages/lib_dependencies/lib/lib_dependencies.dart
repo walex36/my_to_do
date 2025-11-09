@@ -5,6 +5,7 @@ export 'package:equatable/equatable.dart';
 export 'package:result_dart/result_dart.dart';
 export 'package:logger/logger.dart';
 export 'package:uuid/uuid.dart';
+export 'package:shimmer/shimmer.dart';
 
 /// State Manager
 export 'package:flutter_bloc/flutter_bloc.dart';

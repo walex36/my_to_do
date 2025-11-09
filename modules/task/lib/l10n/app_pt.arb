@@ -1,4 +1,7 @@
 {
-    "task_nameTile": "Tarefas",
-    "task_myTaskInitializingLabel": "Minhas Tarefas inicializando"
+    "task_nameTitle": "Lista de tarefas",
+    "task_myTaskInitializingLabel": "Minhas Tarefas inicializando",
+    "task_allSegmentLabel": "Todos",
+    "task_pendingSegmentLabel": "Pendente",
+    "task_doneSegmentLabel": "Feito"
 }

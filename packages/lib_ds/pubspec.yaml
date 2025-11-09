@@ -8,6 +8,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  
+  lib_dependencies:
+    path: ../lib_dependencies
 
 dev_dependencies:
   flutter_test:
