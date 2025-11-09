@@ -1,13 +1,13 @@
 import 'package:lib_core/lib_core.dart';
-import 'package:task/src/data/datasources/i_local_datasource.dart';
+import 'package:task/src/data/datasources/i_task_local_datasource.dart';
 import 'package:task/src/data/models/task_model.dart';
 import 'package:task/src/domain/enums/enums.dart';
 
-class LocalDatasource extends ILocalDatasource {
+class TaskLocalDatasource extends ITaskLocalDatasource {
   final ILocalDatabaseRepository _database;
   final ILoggerRepository _logger;
 
-  LocalDatasource({required ILocalDatabaseRepository database, required ILoggerRepository logger})
+  TaskLocalDatasource({required ILocalDatabaseRepository database, required ILoggerRepository logger})
     : _database = database,
       _logger = logger;
 

@@ -2,7 +2,7 @@ import 'package:lib_core/lib_core.dart';
 import 'package:task/src/data/models/models.dart';
 import 'package:task/src/domain/enums/enums.dart';
 
-abstract class ILocalDatasource {
+abstract class ITaskLocalDatasource {
   Future<void> setTask({required TaskModel task});
   Future<PaginatedResponse<TaskModel>> getTasks({
     required String? hash,

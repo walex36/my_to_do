@@ -9,6 +9,6 @@ class MockILoggerRepository extends Mock implements ILoggerRepository {}
 
 class MockIUuidRepository extends Mock implements IUuidRepository {}
 
-class MockILocalDatasource extends Mock implements ILocalDatasource {}
+class MockITaskLocalDatasource extends Mock implements ITaskLocalDatasource {}
 
 class MockITaskRepository extends Mock implements ITaskRepository {}

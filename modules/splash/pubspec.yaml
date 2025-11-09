@@ -1,5 +1,5 @@
-name: lib_core
-description: "Package core"
+name: splash
+description: "A new Flutter package project."
 version: 0.0.1
 publish_to: none
 
@@ -11,14 +11,11 @@ dependencies:
   flutter:
     sdk: flutter
 
-  splash:
-    path: ../../modules/splash
-  task:
-    path: ../../modules/task
-  
   lib_dependencies:
-    path: ../lib_dependencies
-  
+    path: ../../packages/lib_dependencies
+  lib_core:
+    path: ../../packages/lib_core
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

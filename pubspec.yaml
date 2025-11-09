@@ -11,6 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
 
+  splash:
+    path: modules/splash
   task:
     path: modules/task
   

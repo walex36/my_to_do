@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lib_core/lib_core.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:task/src/data/datasources/local_datasource.dart';
+import 'package:task/src/data/datasources/task_local_datasource.dart';
 import 'package:task/src/data/models/models.dart';
 import 'package:task/src/domain/enums/enums.dart';
 
@@ -12,12 +12,12 @@ import '../../../mocks/string_mock.dart';
 void main() {
   late ILocalDatabaseRepository database;
   late ILoggerRepository logger;
-  late LocalDatasource localDatasource;
+  late TaskLocalDatasource localDatasource;
 
   setUpAll(() {
     database = MockILocalDatabaseRepository();
     logger = MockILoggerRepository();
-    localDatasource = LocalDatasource(database: database, logger: logger);
+    localDatasource = TaskLocalDatasource(database: database, logger: logger);
     TaskDateTime.customTime = DateTime.now();
   });
   group('LocalDatasource', () {

@@ -10,4 +10,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get task_nameTile => 'Tarefas';
+
+  @override
+  String get task_myTaskInitializingLabel => 'Minhas Tarefas inicializando';
 }

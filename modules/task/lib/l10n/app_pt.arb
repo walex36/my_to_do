@@ -1,3 +1,4 @@
 {
-    "task_nameTile": "Tarefas"
+    "task_nameTile": "Tarefas",
+    "task_myTaskInitializingLabel": "Minhas Tarefas inicializando"
 }

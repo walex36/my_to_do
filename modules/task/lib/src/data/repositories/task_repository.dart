@@ -1,6 +1,6 @@
 import 'package:lib_core/lib_core.dart';
 import 'package:lib_dependencies/lib_dependencies.dart';
-import 'package:task/src/data/datasources/i_local_datasource.dart';
+import 'package:task/src/data/datasources/i_task_local_datasource.dart';
 import 'package:task/src/data/models/task_model.dart';
 import 'package:task/src/domain/entities/task_entity.dart';
 import 'package:task/src/domain/enums/state_task_enum.dart';
@@ -8,12 +8,12 @@ import 'package:task/src/domain/errors/task_failure_error.dart';
 import 'package:task/src/domain/repositories/i_task_repository.dart';
 
 class TaskRepository implements ITaskRepository {
-  final ILocalDatasource _localDatasource;
+  final ITaskLocalDatasource _localDatasource;
   final ILoggerRepository _logger;
   final IUuidRepository _uuidRepository;
 
   TaskRepository({
-    required ILocalDatasource localDatasource,
+    required ITaskLocalDatasource localDatasource,
     required ILoggerRepository logger,
     required IUuidRepository uuidRepository,
   }) : _localDatasource = localDatasource,

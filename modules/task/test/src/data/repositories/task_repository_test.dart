@@ -14,12 +14,12 @@ import '../../../mocks/task_mock.dart';
 void main() {
   late TaskRepository taskRepository;
 
-  late ILocalDatasource localDatasource;
+  late ITaskLocalDatasource localDatasource;
   late ILoggerRepository logger;
   late IUuidRepository uuidRepository;
 
   setUpAll(() {
-    localDatasource = MockILocalDatasource();
+    localDatasource = MockITaskLocalDatasource();
     logger = MockILoggerRepository();
     uuidRepository = MockIUuidRepository();
     taskRepository = TaskRepository(localDatasource: localDatasource, logger: logger, uuidRepository: uuidRepository);

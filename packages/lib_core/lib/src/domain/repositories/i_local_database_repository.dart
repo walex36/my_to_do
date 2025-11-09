@@ -1,5 +1,4 @@
 abstract class ILocalDatabaseRepository {
-  void init();
   Future<String?> getString({required String key});
   Future<int?> getInt({required String key});
   Future<List<String>> getListString({required String key});

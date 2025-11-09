@@ -1,13 +1,9 @@
 import 'package:lib_core/src/domain/repositories/i_logger_repository.dart';
 import 'package:lib_core/src/extensions/task_date_time.dart';
-import 'package:logger/logger.dart';
+import 'package:lib_dependencies/lib_dependencies.dart';
 
-class LoggerRepository extends ILoggerRepository {
-  late final Logger _logger;
-
-  void init() {
-    _logger = Logger();
-  }
+class LoggerRepository implements ILoggerRepository {
+  final Logger _logger = Logger();
 
   @override
   void error({required String message, required StackTrace? stackTrace}) {

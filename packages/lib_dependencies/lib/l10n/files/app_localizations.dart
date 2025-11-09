@@ -103,6 +103,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Task'**
   String get task_nameTile;
+
+  /// No description provided for @task_myTaskInitializingLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Minhas Tarefas initializing'**
+  String get task_myTaskInitializingLabel;
 }
 
 class _AppLocalizationsDelegate
