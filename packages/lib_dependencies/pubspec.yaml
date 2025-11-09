@@ -16,14 +16,14 @@ dependencies:
   intl: any
   
   # Utils
-  equatable: 2.0.7
-  result_dart: 2.1.1
+  equatable: ^2.0.7
+  result_dart: ^2.1.1
 
   # State Manager
-  flutter_bloc: 9.1.1
+  flutter_bloc: ^9.1.1
 
   # Router Manager && Injection Manager
-  flutter_modular: 6.4.1
+  flutter_modular: ^6.4.1
 
 
 flutter:

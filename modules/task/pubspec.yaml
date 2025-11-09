@@ -12,11 +12,11 @@ dependencies:
     sdk: flutter
 
   lib_dependencies:
-    path: ../../package/lib_dependencies
+    path: ../../packages/lib_dependencies
   lib_core:
-    path: ../../package/lib_core
+    path: ../../packages/lib_core
   lib_ds:
-    path: ../../package/lib_ds
+    path: ../../packages/lib_ds
 
 dev_dependencies:
   flutter_test:

@@ -11,9 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
   
-  shared_preferences: 2.5.3
-  logger: 2.6.2
-  uuid: 4.5.2
+  shared_preferences: ^2.5.3
+  logger: ^2.6.2
+  uuid: ^4.5.2
   
   lib_dependencies:
     path: ../lib_dependencies
