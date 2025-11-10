@@ -127,6 +127,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Done'**
   String get task_doneSegmentLabel;
+
+  /// No description provided for @task_descriptionOfTheTaskLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Description of the task'**
+  String get task_descriptionOfTheTaskLabel;
+
+  /// No description provided for @task_newTaskLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'New Task'**
+  String get task_newTaskLabel;
+
+  /// No description provided for @lib_ds_saveLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get lib_ds_saveLabel;
 }
 
 class _AppLocalizationsDelegate

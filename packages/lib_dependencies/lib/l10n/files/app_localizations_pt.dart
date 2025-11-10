@@ -22,4 +22,13 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get task_doneSegmentLabel => 'Feito';
+
+  @override
+  String get task_descriptionOfTheTaskLabel => 'Descrição da tarefa';
+
+  @override
+  String get task_newTaskLabel => 'Nova Tarefa';
+
+  @override
+  String get lib_ds_saveLabel => 'Salvar';
 }

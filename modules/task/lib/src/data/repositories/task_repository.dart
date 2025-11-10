@@ -34,13 +34,13 @@ class TaskRepository implements ITaskRepository {
   }
 
   @override
-  Future<ResultDart<void, TaskFailure>> createTask({required String description}) async {
+  Future<ResultDart<Task, TaskFailure>> createTask({required String description}) async {
     try {
       final dateTime = TaskDateTime.now();
       final hash = _uuidRepository.generateV5(name: dateTime.millisecondsSinceEpoch.toString());
       final taskModel = TaskModel(hash: hash, description: description, state: StateTask.pending, createdAt: dateTime);
       await _localDatasource.setTask(task: taskModel);
-      return Success(true);
+      return Success(taskModel.toEntity());
     } on LocalDatabaseException {
       return Failure(TaskFailureNotCreate());
     } catch (e, s) {

@@ -47,7 +47,7 @@ class TaskLocalDatasource extends ITaskLocalDatasource {
       List<TaskModel> tasks = [];
       List<String> listHash = [];
 
-      if (state != null) {
+      if (state == null) {
         listHash = await _database.getListString(key: keyListTask);
       } else {
         listHash = await _database.getListString(key: keyListTaskState(state: state!));

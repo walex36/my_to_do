@@ -11,7 +11,7 @@ abstract class ITaskRepository {
     required int rowsPerPage,
     required int page,
   });
-  Future<ResultDart<void, TaskFailure>> createTask({required String description});
+  Future<ResultDart<Task, TaskFailure>> createTask({required String description});
   Future<ResultDart<void, TaskFailure>> updateTask({required Task task});
   Future<ResultDart<void, TaskFailure>> deleteTask({required String hash});
   Future<ResultDart<void, TaskFailure>> changeStateTask({required String hash, required StateTask state});

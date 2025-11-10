@@ -30,5 +30,32 @@ class AppTheme {
         (states) => states.contains(WidgetState.selected) ? AppColors.secondary : AppColors.container,
       ),
     ),
+    bottomSheetTheme: const BottomSheetThemeData(
+      backgroundColor: AppColors.background,
+      dragHandleColor: AppColors.primary,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+      ),
+    ),
+    textTheme: const TextTheme(
+      displayLarge: TextStyle(color: AppColors.text),
+      displayMedium: TextStyle(color: AppColors.text),
+      displaySmall: TextStyle(color: AppColors.text),
+      headlineLarge: TextStyle(color: AppColors.text),
+      headlineMedium: TextStyle(color: AppColors.text),
+      headlineSmall: TextStyle(color: AppColors.text),
+      titleLarge: TextStyle(color: AppColors.text),
+      titleMedium: TextStyle(color: AppColors.text),
+      titleSmall: TextStyle(color: AppColors.text),
+      bodyLarge: TextStyle(color: AppColors.text),
+      bodyMedium: TextStyle(color: AppColors.text),
+      bodySmall: TextStyle(color: AppColors.text),
+      labelLarge: TextStyle(color: AppColors.text),
+      labelMedium: TextStyle(color: AppColors.text),
+      labelSmall: TextStyle(color: AppColors.text),
+    ),
+    inputDecorationTheme: const InputDecorationTheme(
+      counterStyle: TextStyle(color: AppColors.text, fontWeight: FontWeight.w600),
+    ),
   );
 }

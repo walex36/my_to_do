@@ -6,7 +6,7 @@ import 'package:task/src/domain/enums/state_task_enum.dart';
 TaskModel taskModelMock = TaskModel(
   hash: 'hash',
   description: 'description',
-  state: StateTask.todo,
+  state: StateTask.pending,
   createdAt: TaskDateTime.now(),
 );
 

@@ -22,4 +22,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get task_doneSegmentLabel => 'Done';
+
+  @override
+  String get task_descriptionOfTheTaskLabel => 'Description of the task';
+
+  @override
+  String get task_newTaskLabel => 'New Task';
+
+  @override
+  String get lib_ds_saveLabel => 'Save';
 }

@@ -18,7 +18,8 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     on<TaskInitEvent>(_onTaskInitEvent);
     on<TaskLoadMoreEvent>(_onTaskLoadMoreEvent);
     on<TaskChangeStateEvent>(_onTaskChangeStateEvent);
-    on<TaskUpdateEvent>(_onTaskUpdateEvent);
+    on<TaskUpdateDescriptionEvent>(_onTaskUpdateDescriptionEvent);
+    on<TaskCreateEvent>(_onTaskCreateEvent);
     on<TaskDeleteEvent>(_onTaskDeleteEvent);
   }
 
@@ -47,27 +48,26 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
   Future<void> _onTaskChangeStateEvent(TaskChangeStateEvent event, Emitter<TaskState> emit) async {
     final stateCurrent = state as TaskLoadedState;
-
     final result = await _taskRepository.changeStateTask(hash: event.hash, state: event.state);
 
     result.fold((tasks) {
       final taskCurrent = stateCurrent.tasks.firstWhere((element) => element.hash == event.hash);
-      final taskNew = taskCurrent.copyWith(state: event.state);
-      final tasksNew = stateCurrent.tasks.map((e) => e.hash == event.hash ? taskNew : e).toList();
-      emit(TaskLoadedState(tasks: tasksNew, page: stateCurrent.page, moreData: stateCurrent.moreData));
+      final listTaskCurrent = _updateListTask(stateCurrent.tasks, taskCurrent);
+      emit(TaskLoadedState(tasks: listTaskCurrent, page: stateCurrent.page, moreData: stateCurrent.moreData));
     }, (failure) => emit(TaskErrorState(failure: failure)));
   }
 
-  Future<void> _onTaskUpdateEvent(TaskUpdateEvent event, Emitter<TaskState> emit) async {
+  Future<void> _onTaskUpdateDescriptionEvent(TaskUpdateDescriptionEvent event, Emitter<TaskState> emit) async {
     final stateCurrent = state as TaskLoadedState;
+    final taskCurrent = stateCurrent.tasks
+        .firstWhere((element) => element.hash == event.hash)
+        .copyWith(description: event.description);
 
-    final result = await _taskRepository.updateTask(task: event.task);
+    final result = await _taskRepository.updateTask(task: taskCurrent);
 
     result.fold((tasks) {
-      final taskCurrent = stateCurrent.tasks.firstWhere((element) => element.hash == event.task.hash);
-      final taskNew = taskCurrent.copyWith(description: event.task.description);
-      final tasksNew = stateCurrent.tasks.map((e) => e.hash == event.task.hash ? taskNew : e).toList();
-      emit(TaskLoadedState(tasks: tasksNew, page: stateCurrent.page, moreData: stateCurrent.moreData));
+      final listTaskCurrent = _updateListTask(stateCurrent.tasks, taskCurrent);
+      emit(TaskLoadedState(tasks: listTaskCurrent, page: stateCurrent.page, moreData: stateCurrent.moreData));
     }, (failure) => emit(TaskErrorState(failure: failure)));
   }
 
@@ -81,4 +81,20 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       emit(TaskLoadedState(tasks: tasksNew, page: stateCurrent.page, moreData: stateCurrent.moreData));
     }, (failure) => emit(TaskErrorState(failure: failure)));
   }
+
+  Future<void> _onTaskCreateEvent(TaskCreateEvent event, Emitter<TaskState> emit) async {
+    final stateCurrent = state as TaskLoadedState;
+    final result = await _taskRepository.createTask(description: event.description);
+
+    result.fold((task) {
+      final listTaskCurrent = stateCurrent.tasks;
+      if (!stateCurrent.moreData) listTaskCurrent.add(task);
+      emit(TaskLoadedState(tasks: listTaskCurrent, page: stateCurrent.page, moreData: stateCurrent.moreData));
+    }, (failure) => emit(TaskErrorState(failure: failure)));
+  }
+}
+
+List<Task> _updateListTask(List<Task> tasks, Task taskNew) {
+  final tasksNew = tasks.map((e) => e.hash == taskNew.hash ? taskNew : e).toList();
+  return tasksNew;
 }

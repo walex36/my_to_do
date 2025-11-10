@@ -24,7 +24,10 @@ class SegmentedStateTaskWidget extends StatelessWidget {
             (e) => ButtonSegment<String?>(
               label: Text(
                 e == null ? allTask : StateTask.fromString(e).nameLocalization(localizations),
-                style: textTheme.labelMedium?.copyWith(fontWeight: FontWeight.w600),
+                style: textTheme.labelMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: selected == e ? Colors.white : AppColors.text.withValues(alpha: 0.5),
+                ),
               ),
               value: e,
             ),
