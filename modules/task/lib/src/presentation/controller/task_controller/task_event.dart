@@ -8,11 +8,7 @@ class TaskInitEvent extends TaskEvent {
   TaskInitEvent({required this.state});
 }
 
-class TaskLoadMoreEvent extends TaskEvent {
-  final StateTask? state;
-  final int page;
-  TaskLoadMoreEvent({required this.state, required this.page});
-}
+class TaskLoadMoreEvent extends TaskEvent {}
 
 class TaskChangeStateEvent extends TaskEvent {
   final String hash;

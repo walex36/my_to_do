@@ -30,6 +30,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String get task_newTaskLabel => 'New Task';
 
   @override
+  String get task_listEmpytDesc => 'No tasks';
+
+  @override
+  String get task_unexpectedErrorDesc =>
+      'An unexpected error occurred, please restart the app';
+
+  @override
+  String get task_notFoundErrorDesc =>
+      'Error finding task, please restart the app';
+
+  @override
+  String get task_notCreateErrorDesc =>
+      'Error creating task, please restart the app';
+
+  @override
+  String get task_notUpdateErrorDesc =>
+      'Error updating task, please restart the app';
+
+  @override
+  String get task_notDeleteErrorDesc =>
+      'Error deleting task, please restart the app';
+
+  @override
   String get lib_ds_saveLabel => 'Save';
 
   @override

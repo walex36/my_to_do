@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:lib_dependencies/l10n/files/app_localizations.dart';
 import 'package:lib_dependencies/lib_dependencies.dart';
 import 'package:lib_ds/lib_ds.dart';
+import 'package:task/src/domain/errors/task_failure_error.dart';
 import 'package:task/src/presentation/controller/task_controller/task_bloc.dart';
+import 'package:task/src/presentation/widgets/task_page/task_error_widget.dart';
 import 'package:task/src/presentation/widgets/task_page/task_loaded_widget.dart';
 import 'package:task/src/presentation/widgets/task_page/task_loading_widget.dart';
 
@@ -28,20 +30,18 @@ class _TaskPageState extends State<TaskPage> {
       appBar: AppAppBar(title: localizations.task_nameTitle),
       body: BlocBuilder<TaskBloc, TaskState>(
         bloc: widget.taskBloc,
+        buildWhen: (previous, current) {
+          final list = [TaskLoadingState, TaskLoadedState, TaskErrorState];
+          return list.contains(current.runtimeType);
+        },
         builder: (context, state) {
           switch (state) {
             case TaskLoadingState():
               return TaskLoadingWidget();
             case TaskLoadedState():
-              return TaskLoadedWidget(
-                taskBloc: widget.taskBloc,
-                tasks: state.tasks,
-                page: state.page,
-                moreData: state.moreData,
-                selected: state.stateTaskSelected,
-              );
+              return TaskLoadedWidget(taskBloc: widget.taskBloc);
             case TaskErrorState():
-              return Center(child: Text(state.failure.toString()));
+              return TaskErrorWidget(failure: state.failure);
           }
         },
       ),

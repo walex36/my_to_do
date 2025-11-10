@@ -54,8 +54,8 @@ void main() {
             () => taskRepository.getTasks(rowsPerPage: 20, page: 2),
           ).thenAnswer((_) => Future.value(Success(PaginatedResponse(data: [], total: 0))));
         },
-        act: (bloc) => bloc.add(TaskLoadMoreEvent(state: null, page: 1)),
-        expect: () => [TaskLoadedState(tasks: [], page: 2, moreData: false, stateTaskSelected: null)],
+        act: (bloc) => bloc.add(TaskLoadMoreEvent()),
+        expect: () => [TaskAddState(newTask: [], tasks: [], page: 2, moreData: false, stateTaskSelected: null)],
       );
 
       blocTest(
@@ -67,7 +67,7 @@ void main() {
             () => taskRepository.getTasks(rowsPerPage: 20, page: 2),
           ).thenAnswer((_) => Future.value(Failure(TaskFailure())));
         },
-        act: (bloc) => bloc.add(TaskLoadMoreEvent(state: null, page: 1)),
+        act: (bloc) => bloc.add(TaskLoadMoreEvent()),
         expect: () => [TaskErrorState(failure: TaskFailure())],
       );
     });
@@ -84,7 +84,8 @@ void main() {
         },
         act: (bloc) => bloc.add(TaskChangeStateEvent(hash: listTaskMock.first.hash, state: StateTask.done)),
         expect: () => [
-          TaskLoadedState(
+          TaskChangingStateEvent(
+            taskUpdated: listTaskMock.first.copyWith(state: StateTask.done),
             tasks: [
               listTaskMock.first.copyWith(state: StateTask.done),
               ...listTaskMock.sublist(1),
@@ -122,7 +123,8 @@ void main() {
         },
         act: (bloc) => bloc.add(TaskDeleteEvent(hash: listTaskMock.first.hash)),
         expect: () => [
-          TaskLoadedState(
+          TaskDeleteState(
+            hash: listTaskMock.first.hash,
             tasks: listTaskMock.where((e) => e.hash != listTaskMock.first.hash).toList(),
             page: 1,
             moreData: true,

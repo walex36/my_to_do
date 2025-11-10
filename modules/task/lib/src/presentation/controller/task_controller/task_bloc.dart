@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:lib_core/lib_core.dart';
@@ -14,6 +13,8 @@ part 'task_state.dart';
 class TaskBloc extends Bloc<TaskEvent, TaskState> {
   final ITaskRepository _taskRepository;
 
+  final _rowsPerPage = 20;
+
   TaskBloc({required ITaskRepository taskRepository}) : _taskRepository = taskRepository, super(TaskLoadingState()) {
     on<TaskInitEvent>(_onTaskInitEvent);
     on<TaskLoadMoreEvent>(_onTaskLoadMoreEvent);
@@ -23,7 +24,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   }
 
   Future<void> _onTaskInitEvent(TaskInitEvent event, Emitter<TaskState> emit) async {
-    final result = await _taskRepository.getTasks(state: event.state, rowsPerPage: 20, page: 0);
+    final result = await _taskRepository.getTasks(state: event.state, rowsPerPage: _rowsPerPage, page: 0);
 
     result.fold(
       (tasks) => emit(
@@ -42,37 +43,42 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     final stateCurrent = state as TaskLoadedState;
     final page = stateCurrent.page + 1;
 
-    final result = await _taskRepository.getTasks(state: event.state, rowsPerPage: 20, page: page);
+    final result = await _taskRepository.getTasks(
+      state: stateCurrent.stateTaskSelected,
+      rowsPerPage: _rowsPerPage,
+      page: page,
+    );
 
-    result.fold(
-      (tasks) => emit(
-        TaskLoadedState(
-          tasks: tasks.data,
+    result.fold((tasks) {
+      final currentListTask = [...stateCurrent.tasks, ...tasks.data];
+      emit(
+        TaskAddState(
+          newTask: tasks.data,
+          tasks: currentListTask,
           page: page,
-          moreData: tasks.total > tasks.data.length,
+          moreData: tasks.total > currentListTask.length,
           stateTaskSelected: stateCurrent.stateTaskSelected,
         ),
-      ),
-      (failure) => emit(TaskErrorState(failure: failure)),
-    );
+      );
+    }, (failure) => emit(TaskErrorState(failure: failure)));
   }
 
   Future<void> _onTaskChangeStateEvent(TaskChangeStateEvent event, Emitter<TaskState> emit) async {
     final stateCurrent = state as TaskLoadedState;
     final result = await _taskRepository.changeStateTask(hash: event.hash, state: event.state);
+    Task taskCurrent = stateCurrent.tasks.firstWhere((element) => element.hash == event.hash);
 
     result.fold((tasks) {
       List<Task> listTaskCurrent = [];
-      if (stateCurrent.stateTaskSelected == null) {
-        final taskCurrent = stateCurrent.tasks
-            .firstWhere((element) => element.hash == event.hash)
-            .copyWith(state: event.state);
+      taskCurrent = taskCurrent.copyWith(state: event.state);
+      if (stateCurrent.stateTaskSelected == null || stateCurrent.stateTaskSelected == event.state) {
         listTaskCurrent = _updateListTask(stateCurrent.tasks, taskCurrent);
       } else {
         listTaskCurrent = stateCurrent.tasks.where((e) => e.hash != event.hash).toList();
       }
       emit(
-        TaskLoadedState(
+        TaskChangingStateEvent(
+          taskUpdated: taskCurrent,
           tasks: listTaskCurrent,
           page: stateCurrent.page,
           moreData: stateCurrent.moreData,
@@ -91,7 +97,8 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       final tasksNew = stateCurrent.tasks.where((e) => e.hash != event.hash).toList();
 
       emit(
-        TaskLoadedState(
+        TaskDeleteState(
+          hash: event.hash,
           tasks: tasksNew,
           page: stateCurrent.page,
           moreData: stateCurrent.moreData,
@@ -103,6 +110,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
   Future<void> _onTaskCreateEvent(TaskCreateEvent event, Emitter<TaskState> emit) async {
     final stateCurrent = state as TaskLoadedState;
+
     final result = await _taskRepository.createTask(description: event.description);
 
     result.fold((task) {
@@ -110,7 +118,8 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       if (!stateCurrent.moreData) listTaskCurrent.add(task);
 
       emit(
-        TaskLoadedState(
+        TaskAddState(
+          newTask: [task],
           tasks: listTaskCurrent,
           page: stateCurrent.page,
           moreData: stateCurrent.moreData,

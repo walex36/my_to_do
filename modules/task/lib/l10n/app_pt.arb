@@ -5,5 +5,11 @@
     "task_pendingSegmentLabel": "Pendente",
     "task_doneSegmentLabel": "Feito",
     "task_descriptionOfTheTaskLabel": "Descrição da tarefa",
-    "task_newTaskLabel": "Nova Tarefa"
+    "task_newTaskLabel": "Nova Tarefa",
+    "task_listEmpytDesc": "Não há tarefas",
+    "task_unexpectedErrorDesc": "Ocorreu um erro inesperado, por favor reinicie a aplicação",
+    "task_notFoundErrorDesc": "Erro ao encontrar tarefa, por favor tente reiniciar a aplicação",
+    "task_notCreateErrorDesc": "Erro ao criar tarefa, por favor tente reiniciar a aplicação",
+    "task_notUpdateErrorDesc": "Erro ao atualizar tarefa, por favor tente reiniciar a aplicação",
+    "task_notDeleteErrorDesc": "Erro ao excluir tarefa, por favor tente reiniciar a aplicação"
 }

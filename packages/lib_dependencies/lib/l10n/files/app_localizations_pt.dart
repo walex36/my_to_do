@@ -30,6 +30,29 @@ class AppLocalizationsPt extends AppLocalizations {
   String get task_newTaskLabel => 'Nova Tarefa';
 
   @override
+  String get task_listEmpytDesc => 'Não há tarefas';
+
+  @override
+  String get task_unexpectedErrorDesc =>
+      'Ocorreu um erro inesperado, por favor reinicie a aplicação';
+
+  @override
+  String get task_notFoundErrorDesc =>
+      'Erro ao encontrar tarefa, por favor tente reiniciar a aplicação';
+
+  @override
+  String get task_notCreateErrorDesc =>
+      'Erro ao criar tarefa, por favor tente reiniciar a aplicação';
+
+  @override
+  String get task_notUpdateErrorDesc =>
+      'Erro ao atualizar tarefa, por favor tente reiniciar a aplicação';
+
+  @override
+  String get task_notDeleteErrorDesc =>
+      'Erro ao excluir tarefa, por favor tente reiniciar a aplicação';
+
+  @override
   String get lib_ds_saveLabel => 'Salvar';
 
   @override

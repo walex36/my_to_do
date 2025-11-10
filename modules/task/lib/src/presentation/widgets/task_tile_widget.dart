@@ -10,6 +10,7 @@ class TaskTileWidget extends StatelessWidget {
   final Task task;
   final void Function(void) onDelete;
   final void Function(StateTask) onChangeState;
+  final Animation<double> animation;
 
   const TaskTileWidget({
     super.key,
@@ -18,41 +19,50 @@ class TaskTileWidget extends StatelessWidget {
     required this.task,
     required this.onDelete,
     required this.onChangeState,
+    required this.animation,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Dismissible(
-      key: Key(task.hash),
-      direction: DismissDirection.endToStart,
-      background: Container(
-        color: theme.colorScheme.error,
-        alignment: Alignment.centerRight,
-        child: Align(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Icon(Icons.delete, color: theme.colorScheme.onSurface),
-              const SizedBox(width: 16),
-              Text(
-                localizations.lib_ds_deleteLabel,
-                style: theme.textTheme.labelLarge?.copyWith(color: theme.colorScheme.onSurface),
-              ),
-              const SizedBox(width: 16),
-            ],
+    return SlideTransition(
+      position: animation.drive(
+        Tween(
+          begin: const Offset(1, 0), // começa fora da tela à direita
+          end: Offset.zero,
+        ).chain(CurveTween(curve: Curves.easeOut)),
+      ),
+      child: Dismissible(
+        key: Key(task.hash),
+        direction: DismissDirection.endToStart,
+        background: Container(
+          color: theme.colorScheme.error,
+          alignment: Alignment.centerRight,
+          child: Align(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Icon(Icons.delete, color: theme.colorScheme.onSurface),
+                const SizedBox(width: 16),
+                Text(
+                  localizations.lib_ds_deleteLabel,
+                  style: theme.textTheme.labelLarge?.copyWith(color: theme.colorScheme.onSurface),
+                ),
+                const SizedBox(width: 16),
+              ],
+            ),
           ),
         ),
-      ),
-      onDismissed: onDelete,
-      child: Row(
-        children: [
-          Checkbox(
-            value: task.state.isDone,
-            onChanged: (value) => onChangeState(task.state.isDone ? StateTask.pending : StateTask.done),
-          ),
-          const SizedBox(width: 16),
-          Text(task.description),
-        ],
+        onDismissed: onDelete,
+        child: Row(
+          children: [
+            Checkbox(
+              value: task.state.isDone,
+              onChanged: (value) => onChangeState(task.state.isDone ? StateTask.pending : StateTask.done),
+            ),
+            const SizedBox(width: 16),
+            Text(task.description),
+          ],
+        ),
       ),
     );
   }

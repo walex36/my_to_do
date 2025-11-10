@@ -140,6 +140,42 @@ abstract class AppLocalizations {
   /// **'New Task'**
   String get task_newTaskLabel;
 
+  /// No description provided for @task_listEmpytDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'No tasks'**
+  String get task_listEmpytDesc;
+
+  /// No description provided for @task_unexpectedErrorDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'An unexpected error occurred, please restart the app'**
+  String get task_unexpectedErrorDesc;
+
+  /// No description provided for @task_notFoundErrorDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Error finding task, please restart the app'**
+  String get task_notFoundErrorDesc;
+
+  /// No description provided for @task_notCreateErrorDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Error creating task, please restart the app'**
+  String get task_notCreateErrorDesc;
+
+  /// No description provided for @task_notUpdateErrorDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Error updating task, please restart the app'**
+  String get task_notUpdateErrorDesc;
+
+  /// No description provided for @task_notDeleteErrorDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Error deleting task, please restart the app'**
+  String get task_notDeleteErrorDesc;
+
   /// No description provided for @lib_ds_saveLabel.
   ///
   /// In en, this message translates to:
