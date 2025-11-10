@@ -47,21 +47,21 @@ flutter create --platforms=android,ios.
 
 Em projetos modulares, o `flutter pub get` deve ser executado recursivamente. Use o script de automação para garantir que todas as dependências em todos os pacotes (`packages/` e `features/`) sejam instaladas corretamente.
 
-```bash
-./script/pub_get_all.sh
+```
+dart run scripts/pub_get_all.dart; 
 ```
 
 -----
 
 ## ⚙️ Workflow de Automação (Scripts Essenciais)
 
-O diretório `script/` contém utilitários **essenciais** para o desenvolvimento em um ambiente *multi-package*. Antes de usar, certifique-se de que os scripts possuem permissão de execução: `chmod +x./script/*.sh`.
+O diretório `scripts/` contém utilitários **essenciais** para o desenvolvimento em um ambiente *multi-package*.
 
 | Script | Propósito | Comando |
 |---|---|---|
-| `pub_get_all.sh` | Instala recursivamente dependências (`flutter pub get`) em todos os módulos.[5, 6] | `./script/pub_get_all.sh` |
-| `clean_all.sh` | Remove artefatos de *build* (`build/` e `.dart_tool/`) de todos os módulos.[7, 8] | `./script/clean_all.sh` |
-| `generate_i18n.sh` | Gera classes de código para internacionalização (`l10n`). | `./script/generate_i18n.sh` |
+| `pub_get_all.dart` | Instala recursivamente dependências (`flutter pub get`) em todos os módulos.[5, 6] | `dart run scripts/pub_get_all.dart` |
+| `clean_all.dart` | Remove artefatos de *build* (`build/` e `.dart_tool/`) de todos os módulos.[7, 8] | `dart run scripts/clean_all.dart` |
+| `generate_arb_files.dart` | Gera classes de código para internacionalização (`l10n`). | `dart run scripts/generate_arb_files.dart` |
 
 
 -----
