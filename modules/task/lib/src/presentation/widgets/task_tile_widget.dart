@@ -60,7 +60,16 @@ class TaskTileWidget extends StatelessWidget {
               onChanged: (value) => onChangeState(task.state.isDone ? StateTask.pending : StateTask.done),
             ),
             const SizedBox(width: 16),
-            Text(task.description),
+            Text(
+              task.description,
+              style:
+                  task.state.isDone
+                      ? theme.textTheme.labelLarge?.copyWith(
+                        decoration: TextDecoration.lineThrough,
+                        color: AppColors.text.withValues(alpha: 0.5),
+                      )
+                      : theme.textTheme.labelLarge,
+            ),
           ],
         ),
       ),
