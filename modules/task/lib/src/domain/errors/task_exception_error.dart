@@ -1,0 +1,1 @@
+class TaskException implements Exception {}

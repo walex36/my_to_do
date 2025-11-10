@@ -1,0 +1,26 @@
+name: task
+description: "A new Flutter package project."
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: ^3.9.2
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  lib_dependencies:
+    path: ../../packages/lib_dependencies
+  lib_core:
+    path: ../../packages/lib_core
+  lib_ds:
+    path: ../../packages/lib_ds
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  mocktail: ^1.0.4
+  bloc_test: ^10.0.0

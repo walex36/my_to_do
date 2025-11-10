@@ -1,0 +1,25 @@
+name: lib_core
+description: "Package core"
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: ^3.9.2
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  splash:
+    path: ../../modules/splash
+  task:
+    path: ../../modules/task
+  
+  lib_dependencies:
+    path: ../lib_dependencies
+  
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0

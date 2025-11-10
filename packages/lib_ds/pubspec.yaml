@@ -1,0 +1,17 @@
+name: lib_ds
+description: "Package for design system"
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.9.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  lib_dependencies:
+    path: ../lib_dependencies
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter

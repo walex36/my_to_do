@@ -1,0 +1,36 @@
+name: lib_dependencies
+description: "Package dependencies"
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: ^3.9.2
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # Localization
+  flutter_localizations:
+    sdk: flutter 
+  intl: any
+  
+  # Utils
+  equatable: ^2.0.7
+  result_dart: ^2.1.1
+  logger: ^2.6.2
+  uuid: ^4.5.2
+  shimmer: ^3.0.0
+
+  # State Manager
+  flutter_bloc: ^9.1.1
+
+  # Router Manager && Injection Manager
+  flutter_modular: ^6.4.1
+
+  # Storage
+  shared_preferences: ^2.5.3
+
+flutter:
+  generate: true
+  uses-material-design: true
