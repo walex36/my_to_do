@@ -12,10 +12,11 @@ final class TaskLoadedState extends TaskState {
   final List<Task> tasks;
   final int page;
   final bool moreData;
-  TaskLoadedState({required this.tasks, required this.page, required this.moreData});
+  final StateTask? stateTaskSelected;
+  TaskLoadedState({required this.tasks, required this.page, required this.moreData, required this.stateTaskSelected});
 
   @override
-  List<Object?> get props => [tasks, page, moreData];
+  List<Object?> get props => [tasks, page, moreData, stateTaskSelected];
 }
 
 final class TaskErrorState extends TaskState {

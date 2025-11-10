@@ -18,18 +18,22 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     on<TaskInitEvent>(_onTaskInitEvent);
     on<TaskLoadMoreEvent>(_onTaskLoadMoreEvent);
     on<TaskChangeStateEvent>(_onTaskChangeStateEvent);
-    on<TaskUpdateDescriptionEvent>(_onTaskUpdateDescriptionEvent);
     on<TaskCreateEvent>(_onTaskCreateEvent);
     on<TaskDeleteEvent>(_onTaskDeleteEvent);
   }
 
   Future<void> _onTaskInitEvent(TaskInitEvent event, Emitter<TaskState> emit) async {
-    emit(TaskLoadingState());
-
     final result = await _taskRepository.getTasks(state: event.state, rowsPerPage: 20, page: 0);
 
     result.fold(
-      (tasks) => emit(TaskLoadedState(tasks: tasks.data, page: tasks.total, moreData: tasks.total > tasks.data.length)),
+      (tasks) => emit(
+        TaskLoadedState(
+          tasks: tasks.data,
+          page: 0,
+          moreData: tasks.total > tasks.data.length,
+          stateTaskSelected: event.state,
+        ),
+      ),
       (failure) => emit(TaskErrorState(failure: failure)),
     );
   }
@@ -41,7 +45,14 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     final result = await _taskRepository.getTasks(state: event.state, rowsPerPage: 20, page: page);
 
     result.fold(
-      (tasks) => emit(TaskLoadedState(tasks: tasks.data, page: page, moreData: tasks.total > tasks.data.length)),
+      (tasks) => emit(
+        TaskLoadedState(
+          tasks: tasks.data,
+          page: page,
+          moreData: tasks.total > tasks.data.length,
+          stateTaskSelected: stateCurrent.stateTaskSelected,
+        ),
+      ),
       (failure) => emit(TaskErrorState(failure: failure)),
     );
   }
@@ -51,23 +62,23 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     final result = await _taskRepository.changeStateTask(hash: event.hash, state: event.state);
 
     result.fold((tasks) {
-      final taskCurrent = stateCurrent.tasks.firstWhere((element) => element.hash == event.hash);
-      final listTaskCurrent = _updateListTask(stateCurrent.tasks, taskCurrent);
-      emit(TaskLoadedState(tasks: listTaskCurrent, page: stateCurrent.page, moreData: stateCurrent.moreData));
-    }, (failure) => emit(TaskErrorState(failure: failure)));
-  }
-
-  Future<void> _onTaskUpdateDescriptionEvent(TaskUpdateDescriptionEvent event, Emitter<TaskState> emit) async {
-    final stateCurrent = state as TaskLoadedState;
-    final taskCurrent = stateCurrent.tasks
-        .firstWhere((element) => element.hash == event.hash)
-        .copyWith(description: event.description);
-
-    final result = await _taskRepository.updateTask(task: taskCurrent);
-
-    result.fold((tasks) {
-      final listTaskCurrent = _updateListTask(stateCurrent.tasks, taskCurrent);
-      emit(TaskLoadedState(tasks: listTaskCurrent, page: stateCurrent.page, moreData: stateCurrent.moreData));
+      List<Task> listTaskCurrent = [];
+      if (stateCurrent.stateTaskSelected == null) {
+        final taskCurrent = stateCurrent.tasks
+            .firstWhere((element) => element.hash == event.hash)
+            .copyWith(state: event.state);
+        listTaskCurrent = _updateListTask(stateCurrent.tasks, taskCurrent);
+      } else {
+        listTaskCurrent = stateCurrent.tasks.where((e) => e.hash != event.hash).toList();
+      }
+      emit(
+        TaskLoadedState(
+          tasks: listTaskCurrent,
+          page: stateCurrent.page,
+          moreData: stateCurrent.moreData,
+          stateTaskSelected: stateCurrent.stateTaskSelected,
+        ),
+      );
     }, (failure) => emit(TaskErrorState(failure: failure)));
   }
 
@@ -78,7 +89,15 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
     result.fold((tasks) {
       final tasksNew = stateCurrent.tasks.where((e) => e.hash != event.hash).toList();
-      emit(TaskLoadedState(tasks: tasksNew, page: stateCurrent.page, moreData: stateCurrent.moreData));
+
+      emit(
+        TaskLoadedState(
+          tasks: tasksNew,
+          page: stateCurrent.page,
+          moreData: stateCurrent.moreData,
+          stateTaskSelected: stateCurrent.stateTaskSelected,
+        ),
+      );
     }, (failure) => emit(TaskErrorState(failure: failure)));
   }
 
@@ -89,7 +108,15 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     result.fold((task) {
       final listTaskCurrent = stateCurrent.tasks;
       if (!stateCurrent.moreData) listTaskCurrent.add(task);
-      emit(TaskLoadedState(tasks: listTaskCurrent, page: stateCurrent.page, moreData: stateCurrent.moreData));
+
+      emit(
+        TaskLoadedState(
+          tasks: listTaskCurrent,
+          page: stateCurrent.page,
+          moreData: stateCurrent.moreData,
+          stateTaskSelected: stateCurrent.stateTaskSelected,
+        ),
+      );
     }, (failure) => emit(TaskErrorState(failure: failure)));
   }
 }

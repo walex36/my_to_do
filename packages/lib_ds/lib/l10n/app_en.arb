@@ -1,3 +1,4 @@
 {
-    "lib_ds_saveLabel": "Save"
+    "lib_ds_saveLabel": "Save",
+    "lib_ds_deleteLabel": "Delete"
 }

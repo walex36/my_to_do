@@ -38,6 +38,7 @@ class _TaskPageState extends State<TaskPage> {
                 tasks: state.tasks,
                 page: state.page,
                 moreData: state.moreData,
+                selected: state.stateTaskSelected,
               );
             case TaskErrorState():
               return Center(child: Text(state.failure.toString()));

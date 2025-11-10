@@ -31,4 +31,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get lib_ds_saveLabel => 'Save';
+
+  @override
+  String get lib_ds_deleteLabel => 'Delete';
 }

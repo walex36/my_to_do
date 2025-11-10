@@ -24,6 +24,9 @@ class TaskRepository implements ITaskRepository {
   Future<ResultDart<void, TaskFailure>> changeStateTask({required String hash, required StateTask state}) async {
     try {
       await _localDatasource.changeStateTask(hash: hash, state: state);
+      final taskPaginated = await _localDatasource.getTasks(hash: hash, state: null, rowsPerPage: 1, page: 1);
+      final task = taskPaginated.data.first.copyWith(state: state);
+      await _localDatasource.setTask(task: task);
       return Success(true);
     } on LocalDatabaseException {
       return Failure(TaskFailureNotUpdate());

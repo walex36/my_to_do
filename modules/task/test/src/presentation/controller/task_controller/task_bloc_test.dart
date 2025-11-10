@@ -28,7 +28,7 @@ void main() {
           ).thenAnswer((_) => Future.value(Success(PaginatedResponse(data: [], total: 0))));
         },
         act: (bloc) => bloc.add(TaskInitEvent(state: null)),
-        expect: () => [TaskLoadingState(), TaskLoadedState(tasks: [], page: 0, moreData: false)],
+        expect: () => [TaskLoadedState(tasks: [], page: 0, moreData: false, stateTaskSelected: null)],
       );
 
       blocTest(
@@ -40,7 +40,7 @@ void main() {
           ).thenAnswer((_) => Future.value(Failure(TaskFailure())));
         },
         act: (bloc) => bloc.add(TaskInitEvent(state: null)),
-        expect: () => [TaskLoadingState(), TaskErrorState(failure: TaskFailure())],
+        expect: () => [TaskErrorState(failure: TaskFailure())],
       );
     });
 
@@ -48,20 +48,20 @@ void main() {
       blocTest(
         'emits TaskLoadedState',
         build: () => TaskBloc(taskRepository: taskRepository),
-        seed: () => TaskLoadedState(tasks: [], page: 1, moreData: true),
+        seed: () => TaskLoadedState(tasks: [], page: 1, moreData: true, stateTaskSelected: null),
         setUp: () {
           when(
             () => taskRepository.getTasks(rowsPerPage: 20, page: 2),
           ).thenAnswer((_) => Future.value(Success(PaginatedResponse(data: [], total: 0))));
         },
         act: (bloc) => bloc.add(TaskLoadMoreEvent(state: null, page: 1)),
-        expect: () => [TaskLoadedState(tasks: [], page: 2, moreData: false)],
+        expect: () => [TaskLoadedState(tasks: [], page: 2, moreData: false, stateTaskSelected: null)],
       );
 
       blocTest(
         'emits TaskErrorState',
         build: () => TaskBloc(taskRepository: taskRepository),
-        seed: () => TaskLoadedState(tasks: [], page: 1, moreData: true),
+        seed: () => TaskLoadedState(tasks: [], page: 1, moreData: true, stateTaskSelected: null),
         setUp: () {
           when(
             () => taskRepository.getTasks(rowsPerPage: 20, page: 2),
@@ -76,7 +76,7 @@ void main() {
       blocTest(
         'emits TaskLoadedState',
         build: () => TaskBloc(taskRepository: taskRepository),
-        seed: () => TaskLoadedState(tasks: listTaskMock, page: 1, moreData: true),
+        seed: () => TaskLoadedState(tasks: listTaskMock, page: 1, moreData: true, stateTaskSelected: null),
         setUp: () {
           when(
             () => taskRepository.changeStateTask(hash: listTaskMock.first.hash, state: StateTask.done),
@@ -91,6 +91,7 @@ void main() {
             ],
             page: 1,
             moreData: true,
+            stateTaskSelected: null,
           ),
         ],
       );
@@ -98,7 +99,7 @@ void main() {
       blocTest(
         'emits TaskErrorState',
         build: () => TaskBloc(taskRepository: taskRepository),
-        seed: () => TaskLoadedState(tasks: listTaskMock, page: 1, moreData: true),
+        seed: () => TaskLoadedState(tasks: listTaskMock, page: 1, moreData: true, stateTaskSelected: null),
         setUp: () {
           when(
             () => taskRepository.changeStateTask(hash: listTaskMock.first.hash, state: StateTask.done),
@@ -109,48 +110,11 @@ void main() {
       );
     });
 
-    group('TaskUpdateEvent', () {
-      blocTest(
-        'emits TaskLoadedState',
-        build: () => TaskBloc(taskRepository: taskRepository),
-        seed: () => TaskLoadedState(tasks: listTaskMock, page: 1, moreData: true),
-        setUp: () {
-          when(
-            () => taskRepository.updateTask(task: listTaskMock.first.copyWith(description: 'new description')),
-          ).thenAnswer((_) => Future.value(Success(true)));
-        },
-        act: (bloc) => bloc.add(TaskUpdateEvent(task: listTaskMock.first.copyWith(description: 'new description'))),
-        expect: () => [
-          TaskLoadedState(
-            tasks: [
-              listTaskMock.first.copyWith(description: 'new description'),
-              ...listTaskMock.sublist(1),
-            ],
-            page: 1,
-            moreData: true,
-          ),
-        ],
-      );
-
-      blocTest(
-        'emits TaskErrorState',
-        build: () => TaskBloc(taskRepository: taskRepository),
-        seed: () => TaskLoadedState(tasks: listTaskMock, page: 1, moreData: true),
-        setUp: () {
-          when(
-            () => taskRepository.updateTask(task: listTaskMock.first.copyWith(description: 'new description')),
-          ).thenAnswer((_) => Future.value(Failure(TaskFailure())));
-        },
-        act: (bloc) => bloc.add(TaskUpdateEvent(task: listTaskMock.first.copyWith(description: 'new description'))),
-        expect: () => [TaskErrorState(failure: TaskFailure())],
-      );
-    });
-
     group('TaskDeleteEvent', () {
       blocTest(
         'emits TaskLoadedState',
         build: () => TaskBloc(taskRepository: taskRepository),
-        seed: () => TaskLoadedState(tasks: listTaskMock, page: 1, moreData: true),
+        seed: () => TaskLoadedState(tasks: listTaskMock, page: 1, moreData: true, stateTaskSelected: null),
         setUp: () {
           when(
             () => taskRepository.deleteTask(hash: listTaskMock.first.hash),
@@ -162,6 +126,7 @@ void main() {
             tasks: listTaskMock.where((e) => e.hash != listTaskMock.first.hash).toList(),
             page: 1,
             moreData: true,
+            stateTaskSelected: null,
           ),
         ],
       );
@@ -169,7 +134,7 @@ void main() {
       blocTest(
         'emits TaskErrorState',
         build: () => TaskBloc(taskRepository: taskRepository),
-        seed: () => TaskLoadedState(tasks: listTaskMock, page: 1, moreData: true),
+        seed: () => TaskLoadedState(tasks: listTaskMock, page: 1, moreData: true, stateTaskSelected: null),
         setUp: () {
           when(
             () => taskRepository.deleteTask(hash: listTaskMock.first.hash),

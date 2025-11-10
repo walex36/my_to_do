@@ -4,6 +4,9 @@ enum StateTask {
   pending,
   done;
 
+  bool get isDone => this == StateTask.done;
+  bool get isPending => this == StateTask.pending;
+
   String nameLocalization(AppLocalizations localizations) {
     switch (this) {
       case StateTask.pending:

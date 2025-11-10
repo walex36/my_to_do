@@ -19,7 +19,7 @@ class SmallTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: controller,
       enabled: enabled,
       maxLength: maxLength,

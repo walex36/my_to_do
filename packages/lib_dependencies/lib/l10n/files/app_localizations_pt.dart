@@ -31,4 +31,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get lib_ds_saveLabel => 'Salvar';
+
+  @override
+  String get lib_ds_deleteLabel => 'Excluir';
 }

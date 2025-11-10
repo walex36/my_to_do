@@ -36,6 +36,17 @@ void main() {
             state: StateTask.done,
           ),
         ).thenAnswer((_) async {});
+        when(
+          () => localDatasource.getTasks(
+            hash: any(named: 'hash'),
+            state: any(named: 'state'),
+            rowsPerPage: any(named: 'rowsPerPage'),
+            page: any(named: 'page'),
+          ),
+        ).thenAnswer((_) => Future.value(PaginatedResponse(data: [taskModelMock], total: 1)));
+        when(
+          () => localDatasource.setTask(task: taskModelMock.copyWith(state: StateTask.done)),
+        ).thenAnswer((_) async {});
 
         /// act
         final result = await taskRepository.changeStateTask(hash: 'hash', state: StateTask.done);
@@ -73,7 +84,7 @@ void main() {
         final result = await taskRepository.createTask(description: 'description');
 
         /// assert
-        expect(result, Success(true));
+        expect(result, Success(taskModelMock.toEntity()));
       });
 
       test('Should failure to create task', () async {

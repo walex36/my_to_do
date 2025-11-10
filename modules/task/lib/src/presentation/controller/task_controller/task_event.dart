@@ -25,12 +25,6 @@ class TaskDeleteEvent extends TaskEvent {
   TaskDeleteEvent({required this.hash});
 }
 
-class TaskUpdateDescriptionEvent extends TaskEvent {
-  final String hash;
-  final String description;
-  TaskUpdateDescriptionEvent({required this.hash, required this.description});
-}
-
 class TaskCreateEvent extends TaskEvent {
   final String description;
   TaskCreateEvent({required this.description});

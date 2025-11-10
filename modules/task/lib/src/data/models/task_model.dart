@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:lib_core/lib_core.dart';
 import 'package:task/src/domain/entities/task_entity.dart';
 import 'package:task/src/domain/enums/state_task_enum.dart';
@@ -16,6 +15,16 @@ class TaskModel extends Task {
     };
   }
 
+  @override
+  TaskModel copyWith({String? hash, String? description, StateTask? state, DateTime? createdAt}) {
+    return TaskModel(
+      hash: hash ?? this.hash,
+      description: description ?? this.description,
+      state: state ?? this.state,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
+
   Task toEntity() {
     return Task(hash: hash, description: description, state: state, createdAt: createdAt);
   }
@@ -24,7 +33,7 @@ class TaskModel extends Task {
     return TaskModel(
       hash: map['hash'] as String,
       description: map['description'] ?? '',
-      state: StateTask.values.byName(map['state'] ?? 'todo'),
+      state: map['state'] == null ? StateTask.pending : StateTask.values.byName(map['state']),
       createdAt: DateTime.parse(map['createdAt'] ?? TaskDateTime.now().toIso8601String()),
     );
   }

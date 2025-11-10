@@ -145,6 +145,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Save'**
   String get lib_ds_saveLabel;
+
+  /// No description provided for @lib_ds_deleteLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get lib_ds_deleteLabel;
 }
 
 class _AppLocalizationsDelegate
