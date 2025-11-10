@@ -39,7 +39,7 @@ class _TaskPageState extends State<TaskPage> {
             case TaskLoadingState():
               return TaskLoadingWidget();
             case TaskLoadedState():
-              return TaskLoadedWidget(taskBloc: widget.taskBloc);
+              return TaskLoadedWidget(taskBloc: widget.taskBloc, initialTasks: state.tasks);
             case TaskErrorState():
               return TaskErrorWidget(failure: state.failure);
           }

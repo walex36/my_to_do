@@ -3,14 +3,14 @@ import 'package:lib_dependencies/l10n/files/app_localizations.dart';
 import 'package:lib_dependencies/lib_dependencies.dart';
 import 'package:lib_ds/lib_ds.dart';
 import 'package:task/src/domain/entities/entities.dart';
-import 'package:task/src/domain/enums/enums.dart';
 import 'package:task/src/presentation/controller/task_controller/task_bloc.dart';
 import 'package:task/src/presentation/widgets/segmented_state_task_widget.dart';
 import 'package:task/src/presentation/widgets/task_tile_widget.dart';
 
 class TaskLoadedWidget extends StatefulWidget {
   final TaskBloc taskBloc;
-  const TaskLoadedWidget({super.key, required this.taskBloc});
+  final List<Task> initialTasks;
+  const TaskLoadedWidget({super.key, required this.taskBloc, required this.initialTasks});
 
   @override
   State<TaskLoadedWidget> createState() => _TaskLoadedWidgetState();
@@ -27,6 +27,7 @@ class _TaskLoadedWidgetState extends State<TaskLoadedWidget> {
   @override
   void initState() {
     super.initState();
+    _listTask.addAll(widget.initialTasks);
   }
 
   @override
